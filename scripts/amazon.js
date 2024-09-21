@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart,  addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
 
 let productHtml = '';
@@ -55,13 +55,9 @@ products.forEach( (product) => {
    `;
 });
 document.querySelector('.js-product-grid').innerHTML = productHtml;
-document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
-     let timer;
-     button.addEventListener('click',()=>{
-      let matched = false;
-      const productName = button.dataset.productName;
-      const productId = button.dataset.productId;
-      const selectedQuantity = Number(document.querySelector(`.js-select-quantity-${productId}`).value);
+
+function addedMessage(timer, productId){
+  
       document.querySelector(`.js-add-to-cart-${productId}`).style.opacity = 1;
        if(timer){
         clearTimeout(timer);
@@ -69,21 +65,21 @@ document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
        timer =  setTimeout(() => {
        document.querySelector(`.js-add-to-cart-${productId}`).style.opacity = 0;
        }, 2000);
+       return timer;
+}
+
+document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
+      let timer;
+      button.addEventListener('click',()=>{
+      
+      const productName = button.dataset.productName;
+      const productId = button.dataset.productId;
+      const selectedQuantity = Number(document.querySelector(`.js-select-quantity-${productId}`).value);
+      addToCart(productName,selectedQuantity);
+      timer = addedMessage(timer,productId);
        
-       cart.forEach((item) => {
-        if(item.productname === productName){
-          matched = true;
-          item.quantity += selectedQuantity;
-        }
-        });
-        if(!matched){
-          cart.push({
-            productname: button.dataset.productName,
-            quantity: selectedQuantity
-          });
-        }       
-        document.querySelector('.js-cart-quantity').innerHTML = cart.length;
-       });
+      document.querySelector('.js-cart-quantity').innerHTML = cart.length;
+      });
 })
 
 
