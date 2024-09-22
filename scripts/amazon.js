@@ -49,7 +49,7 @@ products.forEach( (product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary js-add-to-cart-btn" data-product-name="${product.name}" data-product-id="${product.id}">
+          <button class="add-to-cart-button button-primary js-add-to-cart-btn"  data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
@@ -73,15 +73,13 @@ document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
       let timer;
       button.addEventListener('click',()=>{
       
-      const productName = button.dataset.productName;
       const productId = button.dataset.productId;
       const selectedQuantity = Number(document.querySelector(`.js-select-quantity-${productId}`).value);
-      addToCart(productName,selectedQuantity);
+      addToCart(productId,selectedQuantity);
       timer = addedMessage(timer,productId);
        
       document.querySelector('.js-cart-quantity').innerHTML = cart.length;
       });
 })
-console.log(cart);
 
 
