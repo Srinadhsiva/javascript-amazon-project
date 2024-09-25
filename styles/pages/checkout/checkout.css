@@ -57,6 +57,29 @@
   padding-bottom: 5px;
 }
 
+/* your-css */
+.quantity-input {
+  width: 30px;
+  display: none;
+}
+
+.save-quantity-link {
+  display: none;
+}
+
+.is-updating .quantity-input {
+  display: inline-block;
+}
+
+.is-updating .save-quantity-link {
+  display: inline-block;
+}
+
+.is-updating .quantity-label,
+.is-updating .update-quantity-link {
+  display: none !important;
+}
+/*ends here */
 @media (max-width: 1000px) {
   .payment-summary {
     /* grid-row: 1 means this element will be placed into row
