@@ -1,4 +1,4 @@
-import {cart, removeFromCart, updateCartQuantity, updateQuantity} from '../data/cart.js';
+import {cart, removeFromCart, updateCartQuantity, updateQuantity, updateDeliveryOption} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
@@ -66,6 +66,7 @@ cart.forEach((cartItem) =>{
     `;
     }
 );
+document.querySelector('.js-order-summary').innerHTML = cartUpdate;
 function deliveryOptionsHtml(matchedItem, cartItem){
     let html = '';
     deliveryOptions.forEach((deliveryOption) =>{
@@ -73,12 +74,13 @@ function deliveryOptionsHtml(matchedItem, cartItem){
         const deliveryDate = today.add(
             deliveryOption.deliveryDays, 'days'
         );
-        const priceString = deliveryOption.priceCents ? 'FREE': `$${formatCurrency(deliveryOption.priceCents)} -`;
+        const priceString = deliveryOption.priceCents ?  `$${formatCurrency(deliveryOption.priceCents)} -` : 'FREE';
         const dateString  = deliveryDate.format('dddd, MMMM D');  
         const isChecked   = deliveryOption.id === cartItem.deliveryOptionId;
-        html +=`<div class="delivery-option">
+        html +=`<div class="delivery-option js-delivery-option"
+                   data-product-id='${matchedItem.id}' data-delivery-option-id='${deliveryOption.id}'>
                     <input type="radio"
-                        ${isChecked ? 'Checked' : ''}
+                        ${isChecked ? 'checked' : ''}
                         class="delivery-option-input"
                         name="delivery-option-${matchedItem.id}">
                     <div>
@@ -95,9 +97,16 @@ function deliveryOptionsHtml(matchedItem, cartItem){
     return html;
 
 }
+//delivery Options
+
+document.querySelectorAll('.js-delivery-option').forEach((element) =>{
+        element.addEventListener('click',() => {
+            const {productId, deliveryOptionId} = element.dataset;
+            updateDeliveryOption(productId, deliveryOptionId);
+        });
+});
 //cart delete-button
 document.querySelector('.js-no-of-items').innerHTML = updateCartQuantity();
-document.querySelector('.js-order-summary').innerHTML = cartUpdate;
 document.querySelectorAll('.js-delete-link').forEach((link)=>{
     let deleteId = link.dataset.productId;
     link.addEventListener('click',()=>
