@@ -2,7 +2,7 @@ import {cart,  addToCart, updateCartQuantity} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
-
+document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
 let productHtml = '';
 products.forEach( (product) => {
    productHtml +=  `
