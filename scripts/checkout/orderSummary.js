@@ -61,6 +61,7 @@ export function renderOrderSummary(){
         }
     );
     document.querySelector('.js-order-summary').innerHTML = cartUpdate;
+    // document.querySelector('.js-no-of-items').innerHTML = updateCartQuantity();
     function deliveryOptionsHtml(matchedItem, cartItem){
         let html = '';
         deliveryOptions.forEach((deliveryOption) =>{
@@ -92,7 +93,6 @@ export function renderOrderSummary(){
 
     }
     //cart delete-button
-    document.querySelector('.js-no-of-items').innerHTML = updateCartQuantity();
     document.querySelectorAll('.js-delete-link').forEach((link)=>{
         let deleteId = link.dataset.productId;
         link.addEventListener('click',()=>
