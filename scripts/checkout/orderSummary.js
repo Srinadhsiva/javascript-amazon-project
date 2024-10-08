@@ -61,7 +61,7 @@ export function renderOrderSummary(){
         }
     );
     document.querySelector('.js-order-summary').innerHTML = cartUpdate;
-    // document.querySelector('.js-no-of-items').innerHTML = updateCartQuantity();
+    document.querySelector('.js-no-of-items').innerHTML = updateCartQuantity();
     function deliveryOptionsHtml(matchedItem, cartItem){
         let html = '';
         deliveryOptions.forEach((deliveryOption) =>{
