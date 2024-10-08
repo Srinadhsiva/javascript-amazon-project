@@ -48,20 +48,36 @@ export function getProduct(productId){
 });
   return matchedItem;
 }
+
+
+// This is loading products using fetch which returns a promise
 export let products;
-export function loadProducts(renderProductsGrid){
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', ()=>{
-        products = JSON.parse(xhr.response).map((productDetails) =>{
-        if(productDetails.type === "clothing") {
-          return new Clothing(productDetails);
-        }
-        return new Products(productDetails);
+export function loadProductsFromFetch(){
+  const promise = fetch('https://supersimplebackend.dev/products').then((response)=>{
+      return response.json();
+  }).then((product) =>{
+      products = product.map((productDetails) =>{
+      if(productDetails.type === "clothing") {
+        return new Clothing(productDetails);
+      }
+      return new Products(productDetails);
     });
-    renderProductsGrid(); 
-    console.log(products);
   });
-  xhr.open('GET','https://supersimplebackend.dev/products');
-  xhr.send();
-  
+  return promise;
 }
+// This is a way of loading products using callback function 
+// export function loadProducts(renderProductsGrid){
+//   const xhr = new XMLHttpRequest();
+//   xhr.addEventListener('load', ()=>{
+//         products = JSON.parse(xhr.response).map((productDetails) =>{
+//         if(productDetails.type === "clothing") {
+//           return new Clothing(productDetails);
+//         }
+//         return new Products(productDetails);
+//     });
+//     renderProductsGrid(); 
+//   });
+//   xhr.open('GET','https://supersimplebackend.dev/products');
+//   xhr.send();
+  
+// }
