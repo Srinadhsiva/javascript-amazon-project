@@ -1,3 +1,27 @@
+import { formatCurrency } from "../scripts/utils/money.js";
+class Products{
+  id;
+  image;
+  name;
+  rating;
+  priceCents;
+  keywords;
+  constructor(Details){
+    this.id = Details.id;
+    this.image = Details.image;
+    this.name = Details.name;
+    this.rating = Details.rating;
+    this.priceCents = Details.priceCents;
+    this.keywords = Details.keywords;
+  }
+  getStarsUrl(){
+      return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
+
+  getPrice(){
+      return `${formatCurrency(this.priceCents)}`;
+  }
+}
 export function getProduct(productId){
   let matchedItem;
   products.forEach((product) =>{
@@ -666,4 +690,7 @@ export const products = [
       "mens"
     ]
   }
-];
+].map((productDetails) =>{
+    return new Products(productDetails);
+});
+console.log(products)

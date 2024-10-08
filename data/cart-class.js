@@ -1,13 +1,13 @@
 class Cart{
     
     cartItems;
-    localStorageKey;
+    #localStorageKey;
     constructor(localStorageKey){
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey = localStorageKey;
+        this.#loadFromStorage();
     }
-    loadFromStorage(){
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+    #loadFromStorage(){
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
         if(!this.cartItems){
         this.cartItems = [
                 {
@@ -41,7 +41,7 @@ class Cart{
     }
 
     saveToStorage(){
-        localStorage.setItem('cart',JSON.stringify(cart));
+        localStorage.setItem(this.#localStorageKey,JSON.stringify(cart));
     }
 
     addToCart(productId,selectedQuantity){
