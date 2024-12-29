@@ -9,6 +9,7 @@ import { renderPaymentSummary } from './paymentSummary.js';
 export function renderOrderSummary(){
     let cartUpdate = '';
     cart.forEach((cartItem) =>{
+        console.log("hi");
         const matchedItem = getProduct(cartItem.productId);
         const deliveryOptionID = cartItem.deliveryOptionId;
         let deliveryOption = getDeliveryOption(deliveryOptionID);    

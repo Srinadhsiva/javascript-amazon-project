@@ -1,8 +1,9 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
-import { loadProductsFromFetch } from "../data/products.js";
+import { loadProductsFromFetch,products } from "../data/products.js";                     
 async function loadPage() {
    await loadProductsFromFetch();
+   console.log(products);
    
     renderPaymentSummary();
     renderOrderSummary();

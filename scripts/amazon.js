@@ -1,10 +1,8 @@
 import {cart,  addToCart, updateCartQuantity} from '../data/cart.js';
-import { products, loadProductsFromFetch } from '../data/products.js';
+import { products, loadProducts } from '../data/products.js';
 
-// loadProducts(renderProductsGrid);
-renderProductsGrid();
-async function renderProductsGrid(){
-  await loadProductsFromFetch();
+loadProducts(renderProductsGrid);
+function renderProductsGrid(){
   document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
   let productHtml = '';
   products.forEach( (product) => {
@@ -61,7 +59,6 @@ async function renderProductsGrid(){
     `;
   });
   document.querySelector('.js-product-grid').innerHTML = productHtml;
-
   function addedMessage(timer, productId){
     
         document.querySelector(`.js-add-to-cart-${productId}`).style.opacity = 1;

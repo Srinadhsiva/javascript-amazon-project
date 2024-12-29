@@ -1,4 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
+export let products;
+
 class Products{
   id;
   image;
@@ -51,7 +53,6 @@ export function getProduct(productId){
 
 
 // This is loading products using fetch which returns a promise
-export let products;
 export function loadProductsFromFetch(){
   const promise = fetch('https://supersimplebackend.dev/products').then((response)=>{
       return response.json();
@@ -66,18 +67,21 @@ export function loadProductsFromFetch(){
   return promise;
 }
 // This is a way of loading products using callback function 
-// export function loadProducts(renderProductsGrid){
-//   const xhr = new XMLHttpRequest();
-//   xhr.addEventListener('load', ()=>{
-//         products = JSON.parse(xhr.response).map((productDetails) =>{
-//         if(productDetails.type === "clothing") {
-//           return new Clothing(productDetails);
-//         }
-//         return new Products(productDetails);
-//     });
-//     renderProductsGrid(); 
-//   });
-//   xhr.open('GET','https://supersimplebackend.dev/products');
-//   xhr.send();
-  
-// }
+export function loadProducts(callBackFun){
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', ()=>{
+        products = JSON.parse(xhr.response).map((productDetails) =>{
+        if(productDetails.type === "clothing") {
+          return new Clothing(productDetails);
+        }
+        return new Products(productDetails);
+    });
+    console.log(products);
+    callBackFun(); 
+  });
+  xhr.addEventListener('error',(error)=>{
+    console.log("an error occured");
+  })
+  xhr.open('GET','https://supersimplebackend.dev/products');
+  xhr.send();
+}
